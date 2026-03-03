@@ -32,7 +32,7 @@
 ## 🔨 编译说明
 
 ### 使用 Docker 镜像（推荐）
-我们提供了预编译的 Docker 镜像，可免去手动编译依赖的步骤。  
+我们提供了预编译的 [Docker 镜像](https://drive.google.com/file/d/1pS7b1gNG4VIe5S9adTs588vzvNbS9S_H/view?usp=sharing)，可免去手动编译依赖的步骤。  
 下载镜像后直接加载即可运行。
 
 ### 手动编译步骤
@@ -41,23 +41,17 @@
 ### 1. 创建编译目录
 
 ```bash
-mkdir build
-cd build
+mkdir build && cd build
 ```
 
-### 2. 运行 CMake
+### 2. 运行 CMake 编译
 
 ```bash
 cmake ..
-```
-
-### 3. 编译项目
-
-```bash
 make
 ```
- 
-### 4. 输入文件目录：
+
+### 3. 输入文件目录：
 
 ```bash
 ./AiHttpServer/build/bin
