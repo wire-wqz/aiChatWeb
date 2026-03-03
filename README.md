@@ -1,6 +1,4 @@
-# AiChatWeb
-
-## 上线网站:https://www.wire-wqz.xyz
+# AiChatWeb (上线网站:https://www.wire-wqz.xyz)
 
 基于 muduo 网络库构建的高性能 AI 对话 HTTP 框架，支持千问、豆包等大模型，集成 CMake 构建系统，并内置 SSL、MySQL、RabbitMQ、MCP 工具调用、RAG 知识库、支付宝支付等企业级功能模块。
 
