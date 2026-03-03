@@ -1,0 +1,81 @@
+/* 复用 modal-overlay，但为充值中心定制更宽的内容框 */
+.recharge-content {
+    max-width: 650px; /* 比登录框宽，以便容纳3列 */
+    width: 90%;
+}
+
+.highlight-balance {
+    color: #28a745;
+    font-weight: bold;
+}
+
+/* 网格布局：3列，自动换行 */
+.recharge-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+}
+
+/* 单个充值卡片样式 */
+.recharge-card {
+    position: relative;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #f9f9f9;
+}
+
+.recharge-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* 选中状态 */
+.recharge-card.selected {
+    border-color: #ff9800;
+    background: #fff8e1;
+    box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2);
+}
+
+.token-amount {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.price-tag {
+    font-size: 18px;
+    color: #d32f2f;
+    font-weight: bold;
+}
+
+/* 角标样式 (新人特惠/超值) */
+.badge {
+    position: absolute;
+    top: -10px;
+    right: -5px;
+    background: linear-gradient(45deg, #ff4d4f, #ff7875);
+    color: white;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px 0 10px 0;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+
+.tips {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+/* 移动端适配：屏幕小的时候变2列 */
+@media (max-width: 600px) {
+    .recharge-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

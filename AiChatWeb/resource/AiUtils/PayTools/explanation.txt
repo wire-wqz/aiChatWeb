@@ -1,0 +1,6 @@
+{
+  "app_id":            支付宝沙箱ID
+  "api_url":           支付宝沙箱请求URL
+  "private_key":       支付宝私钥
+  "alipay_public_key": 支付宝公钥
+}

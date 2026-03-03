@@ -1,0 +1,346 @@
+/* 左侧会话列表样式 */
+
+/* 左侧会话列表 */
+.session-list {
+    width: 260px;
+    height: 100vh;
+    display: flex;
+    background-color: #F3F3F3;
+    border-right: 1px solid #e0e0e0;     
+    display: flex;
+    flex-direction: column;
+}
+
+/* 左侧会话列表头部 */
+.session-list .session-list-header {
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    background-color: #F3F3F3;
+    border-bottom: 2.5px solid #e0e0e0;
+}
+
+/* 新聊天按钮*/
+.session-list .new-chat-btn {
+    width: 100%;
+    padding: 8px 0;
+    margin-top: 10px;
+    cursor: pointer;
+    background: #00c3ff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 0 8px #00c3ff;
+    transition: all 0.3s;
+}
+
+/* 新聊天按钮hover*/
+.session-list .new-chat-btn:hover {
+    background: #00e1ff;
+    box-shadow: 0 0 15px #00e1ff;
+    transform: scale(1.05);
+}
+
+/* 会话显示区域 ul是无序列表*/
+.session-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* 会话卡片 li是有序列表容器*/
+.session-list li {
+    padding: 12px 16px;
+    cursor: pointer;       /* 鼠标光标设为手型，表示该元素可点击交互 */
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 10px;   /* 边框圆角 */
+    margin: 2px 3px;
+    font-size: 14px;
+    line-height: 1;
+    color: #1a1a1a;
+    position: relative;
+    background: #F3F3F3;
+ 
+    display: flex;                    /* 启用 Flex */
+    justify-content: space-between;   /* 两端对齐 */
+    align-items: center;              /* 垂直居中 */
+} 
+
+/* 会话名称区域 */
+.session-name {
+    flex: 1;                /* 占据剩余空间 */
+    white-space: nowrap;    /* 不换行 */
+    overflow: hidden;       /* 超出隐藏 */
+    text-overflow: ellipsis;/* 显示省略号 */
+    margin-right: 8px;      /* 和删除按钮的间距 */
+}
+
+/* 删除图标样式 */
+.delete-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 16px;
+    font-weight: bold;
+    opacity: 0;             /* 默认隐藏 */
+    transition: all 0.2s;
+    z-index: 2;             /* 保证在点击层级之上 */
+}
+
+/* 悬停 li 时显示删除图标 */
+.session-list li:hover .delete-icon {
+    opacity: 1;
+}
+
+/* 删除图标悬停效果 */
+.delete-icon:hover {
+    background-color: #ff4d4f; /* 红色背景 */
+    color: white;
+    transform: scale(1.1);
+}
+
+
+.session-list li.active {
+    background: #DADADA;
+    color: #1a1a1a;
+    font-weight: 600;
+    box-shadow: 0 2px 8px #DADADA;;
+}
+
+.session-list li:hover:not(.active) {
+    background: rgba(0, 125, 255, 0.06);
+    border-color: rgba(0, 125, 255, 0.2);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* .session-list li {
+    padding: 12px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    transition: background 0.2s;
+}
+
+.session-list li.active {
+    background: #00c3ff;
+    color: #fff;
+    font-weight: 500;
+    box-shadow: 0 0 8px #00c3ff;
+}
+
+.session-list li:hover {
+    background: rgba(0,195,255,0.2);
+} */
+
+/* 登陆区 */
+.session-list .login-btn {
+    width: 90%;                        /* 稍微留点边距，不要贴死边缘 */
+    margin: 10px auto;                 /* 上下间距10px，左右自动居中 */
+    padding: 10px 15px;                /* 调整内边距，左右均衡 */
+    
+    background-color: #F3F3F3;         
+    border-radius: 12px;
+    border: 1px solid transparent;     /* 预留边框位置，避免hover抖动 */
+    
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    /* --- Flexbox 核心布局 --- */
+    display: flex;
+    align-items: center;               /* 垂直居中 */
+    justify-content: center;           /* 【关键】改为左对齐 */
+    gap: 30px;                        
+    
+    position: relative;
+    box-sizing: border-box;
+}
+
+
+/* 图标样式 */
+.session-list .login-btn img {
+    width: 20px;          /* 限制图标宽度，防止图片过大 */
+    height: 20px;         /* 限制图标高度 */
+    object-fit: contain;  /* 保持图片比例，不被拉伸 */
+    display: block;       /* 消除图片底部的默认间隙 */
+}
+
+/* 用户名 */
+#user-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    
+    /* 文本截断处理（防止用户名过长破坏布局） */
+    max-width: 80px;                   /* 根据你的侧边栏宽度调整 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Token 余额徽章基础样式 */
+.token-badge {
+    /* 基础字体样式 */
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 500;
+    line-height: 1.2;
+    white-space: nowrap;      /* 不换行 */
+    flex-shrink: 0;           /* 【关键】禁止缩小，确保数字完整显示 */
+    
+    /* 布局微调 */
+    margin-left: auto;        /* 【可选】开启这行，徽章会靠到按钮最右侧；注释掉则紧跟用户名 */
+
+    /* 显示效果 */
+    opacity: 1;
+    max-width: 100px;       /* 设置一个足够大的宽度供内容显示 */
+    padding: 1px 6px;       /* 正常的内边距 */
+    margin-left: 8px;       /* 正常的左间距 */
+    transform: scale(1);    /* 正常大小 */
+}
+
+/* --- 隐藏状态 (通过 JS 添加此 class) --- */
+.token-badge.hidden {
+    opacity: 0;             /* 透明 */
+    max-width: 0;           /* 宽度缩为0 */
+    padding: 0;             /* 内边距清零 */
+    margin-left: 0;         /* 间距清零 */
+    border-width: 0;        /* 边框清零 */
+    transform: scale(0.8);  /* 稍微缩小，产生“缩回去”的效果 */
+}
+
+/* 状态颜色定义 */
+/* 1. 充足 (绿色/蓝色系) - > 10000 Token */
+.token-status-good {
+    background-color: #f6ffed;
+    color: #52c41a;
+    border: 1px solid #b7eb8f;
+}
+
+/* 2. 预警 (橙色系) - 1000 ~ 10000 Token */
+.token-status-warning {
+    background-color: #fff7e6;
+    color: #fa8c16;
+    border: 1px solid #ffd591;
+}
+
+/* 3. 紧缺 (红色系) - < 1000 Token */
+.token-status-danger {
+    background-color: #fff1f0;
+    color: #f5222d;
+    border: 1px solid #ffa39e;
+}
+
+.session-list  .login-btn:hover{
+    background: #DADADA;
+}
+
+/* --- 用户弹窗容器： --- */
+.user-options-popup {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    width: 100%;
+    margin-bottom: 12px;
+    
+    background-color: white;
+    border-radius: 12px;           /* 更大的圆角 */
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    
+    /* Flex 核心设置 */
+    display: flex;                 /* 启用 Flex */
+    flex-direction: row;           /* 横向排列 (默认就是row，写出来清晰点) */
+    align-items: stretch;          /* 让按钮高度保持一致 */
+    justify-content: space-between;/* 两端对齐或均匀分布 */
+    gap: 8px;                      /* 按钮之间的间距 */
+    padding: 8px;                  /* 容器内边距 */
+    
+    box-sizing: border-box;
+    
+    /* 动画 */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 10;
+}
+
+/* 气泡小箭头 */
+.user-options-popup::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px 6px 0;
+    border-style: solid;
+    border-color: #fff transparent transparent;
+}
+
+/* ---  触发显示--- */
+.session-list .login-btn.is-logged-in:hover .user-options-popup {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* --- 弹窗容器内的菜单项 --- */
+.menu-item {
+    /* 布局占比 */
+    flex: 1;                       /* 【关键】让两个按钮平分宽度 */
+    
+    /* 内部对齐 */
+    display: flex;
+    flex-direction: column;        /* 【关键】图标在上，文字在下 (更省空间) */
+    align-items: center;
+    justify-content: center;
+    gap: 4px;                      /* 图标和文字的间距 */
+    
+    padding: 8px 4px;              /* 上下大一点，左右小一点 */
+    margin: 0;                     /* 清除之前的 margin */
+    
+    font-size: 12px;               /* 字体稍微改小，防止换行 */
+    font-weight: 600;
+    color: #555;
+    
+    border-radius: 8px;
+    background-color: #f8f9fa;     /* 给个淡淡的默认背景，像卡片一样 */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    border: 1px solid transparent; /* 预留边框位置，防止hover抖动 */
+}
+
+
+
+/* --- 菜单项悬停交互美化 --- */
+/* 通用悬停：上浮 + 阴影 */
+.menu-item:hover {
+    transform: translateY(-2px);   /* 向上浮动 */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+/* 充值按钮特效 */
+#btn-recharge:hover {
+    background-color: #fffbe6;     /* 浅金背景 */
+    color: #bfa100;
+    border-color: #ffe58f;
+}
+
+/* 退出按钮特效 */
+#btn-logout:hover {
+    background-color: #fff1f0;     /* 浅红背景 */
+    color: #ff4d4f;
+    border-color: #ffa39e;
+}
+
+
+

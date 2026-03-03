@@ -1,0 +1,33 @@
+/* 聊天区 */
+.chat-section {
+    flex: 1;                /* 占据侧栏之外的所有剩余空间 */
+    display: flex;          /* 启用 Flex 布局 */
+    flex-direction: column; /* 垂直排列子元素 */
+    height: 100vh;          /* 强制占满视口高度 */
+    background-color: #f7f9fb; /* 主背景色，建议白色或极淡的灰色 #f7f9fb */
+    position: relative;     /* 为可能的绝对定位子元素提供锚点 */
+    min-width: 0;           /* 关键：防止 Flex 子元素内容过长撑破布局 */
+    overflow: hidden;       /* 防止整体出现双重滚动条 */
+}
+
+
+.chat-section .bottom {
+    flex-shrink: 0;         /* 防止被压缩 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* 字体样式 */
+    color: #b4b4b4;         /* 更淡雅的灰色 */
+    font-size: 12px;        /* 小号字体 */
+    font-weight: 400;
+    
+    /* 间距控制 */
+    width: 100%;
+    padding: 10px 0 20px 0; /* 上边距10px，底部留白20px防止贴底 */
+    background-color: transparent;
+    
+    /* 文本不可选中，提升类似App的质感 */
+    user-select: none;      
+    cursor: default;
+}

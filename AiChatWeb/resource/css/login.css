@@ -1,0 +1,130 @@
+/* --- 1. 遮罩层 (全屏背景) --- */
+.modal-overlay {
+    display: none; /* 默认隐藏 */
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
+    backdrop-filter: blur(5px);           /* 背景高斯模糊 (关键：提升高级感) */
+    z-index: 1000;                        /* 保证在最顶层 */
+    
+    /* Flex布局实现绝对居中 */
+    justify-content: center;
+    align-items: center;
+    
+    /* 动画过渡 */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* 显示状态 */
+.modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* --- 2. 模态框主体 --- */
+.modal-content {
+    background: #ffffff;
+    width: 360px;
+    padding: 30px;
+    border-radius: 16px; /* 大圆角 */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2); /* 柔和的阴影 */
+    position: relative;
+    
+    /* 进场动画：轻微放大 */
+    transform: scale(0.95);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1);
+}
+
+/* --- 3. 关闭按钮 --- */
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.close-btn:hover { color: #333; }
+
+/* --- 4. 标题区域 --- */
+.modal-header h2 {
+    margin: 0 0 5px 0;
+    color: #333;
+    font-size: 24px;
+}
+.modal-header p {
+    margin: 0 0 25px 0;
+    color: #888;
+    font-size: 14px;
+}
+
+/* --- 5. 输入框组 --- */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-size: 13px;
+    font-weight: 500;
+}
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: border-box; /* 防止padding撑破宽度 */
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+}
+.input-group input:focus {
+    border-color: #4a90e2; /* 聚焦时的颜色 */
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+/* --- 6. 登录按钮 --- */
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* 漂亮的渐变色 */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.2s;
+}
+.submit-btn:active {
+    transform: scale(0.98); /* 点击时的按压感 */
+}
+.submit-btn:hover {
+    opacity: 0.9;
+}
+
+/* --- 7. 底部文字 --- */
+.modal-footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+}
+.modal-footer a {
+    color: #667eea;
+    text-decoration: none;
+}
+.modal-footer a:hover {
+    text-decoration: underline;
+}
