@@ -47,8 +47,7 @@ mkdir build && cd build
 ### 2. 运行 CMake 编译
 
 ```bash
-cmake ..
-make
+cmake .. && make
 ```
 
 ### 3. 输入文件目录：
@@ -80,7 +79,7 @@ tail -f /dev/null
 ### 3. 进入容器
 
 ```bash
-docker  exec -it aichatweb_container bash
+docker exec -it aichatweb_container bash
 ```
 
 
