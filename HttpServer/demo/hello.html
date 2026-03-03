@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box1{
+            height: 300px;
+            width:  300px;
+            background-color: black;
+        }
+        .pos_nomal{
+            height: 100px;
+            width: 100px;
+            background-color: white;
+            border: solid medium red;
+        }
+        .pos_absolute{
+            height: 100px;
+            width: 100px;
+            background-color: yellow;
+            border: solid medium red;
+            position: absolute;
+            top: 210px;
+            left:100px;
+        }
+
+        p{
+            font-size: 20px;
+        }
+        .highlight{
+            background-color:yellow;
+        }
+        #p1{
+            font:italic bold 50px/1.5 "KaiTi";
+            background-color:pink;
+        }
+        *{
+            color : orange
+        }
+
+        .father > p
+        {
+            font-size:30px;  
+        }  
+        .father2  p{
+            font-size:100px;  
+        } 
+
+        p+p{
+            background-color:green;
+        }
+
+        .element:hover{
+        background-color:blue;
+        }
+
+ 
+        .tip::before {
+            content: "📌前插元素："; 
+            color:red; 
+        } 
+
+        .tip::selection {
+            background-color: yellow;
+            color: black;
+        }
+
+        .tip::first-line {
+        font-weight: bold;
+        color: blue;
+        font-size: 1.2em;
+        }
+
+        .clickButton{
+            display: inline-block;
+            width: 200pt;
+            height: 100pt;
+            font-size: 20pt;
+            background-color: white;
+        }
+        .clickButton:hover{
+            background-color: grey;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="box1">
+        <div class="pos_nomal"></div>
+        <div class="pos_absolute"></div>
+        <div class="pos_nomal"></div>
+        
+    </div>
+    <p style="color: red; font-size:100px">这是一个运用了CSS样式的文本</p>
+    <p class="highlight"> 这是一个由类选择器指定CSS格式</p>
+    <p id="p1"> 这是一个由ID选择器指定CSS格式 </p>
+
+    <div class="father">
+        <p> 我是子类</p>
+        <div>
+            <p> 我是孙类 </p>
+        </div>
+    </div>
+    <br>
+
+    <div class="father2">
+        <p> 我是子类</p> <!-- 可以被修改 -->
+        <div>
+            <p> 我是孙类 </p>  <!-- 不能被修改 -->
+        </div>
+    </div>
+
+    <p> 第一个h标签 </p>
+    <p> 第二个p标签 </p>
+    <br>
+    <p class="element">这是一个伪类选择器示例，实现指针悬停强调</p>
+    <br>
+    <p class="tip">这是一个伪元素选择器示例，前插虚拟元素</p>
+
+    <a href="/index" target="_self">链接1</a>
+
+    <form action="url">  
+    <!-- 用户名 -->
+    <label for = "username"> 用户名： </label>
+    <input type="text" id = "username" placeholder="请输入用户名">
+    <br>
+    <!-- 密码 -->
+    <label for = "pwd"> 密码： </label>
+    <input type="password" id = "pwd" placeholder="请输入密码">
+    <br>
+    <!-- 单选 -->
+    <label> 性别： </label>
+    <input type="radio" name="gender"> 男
+    <input type="radio" name="gender"> 女
+    <br>
+    <!-- 提交 -->
+    <input type="submit" value="提交">
+
+    <!-- 单行文本 -->
+    <input type="text" name="username" placeholder="请输入用户名">
+    <br>
+    <!-- 密码框 -->
+    <input type="password" name="pwd" placeholder="密码">
+    <br>
+    <!-- 邮箱（有验证） -->
+    <input type="email" name="email" placeholder="example@email.com">
+         <br>
+    <!-- 电话 -->
+    <input type="tel" name="phone" pattern="[0-9]{11}">
+ <br>
+    <!-- URL -->
+    <input type="url" name="website" placeholder="https://example.com">
+ <br>
+    <!-- 搜索框 -->
+    <input type="search" name="keyword" placeholder="搜索...">
+ <br>
+    <!-- 数字 -->
+    <input type="number" name="age" min="0" max="100" step="1">
+ <br>
+    <!-- 范围滑块 -->
+    <input type="range" name="volume" min="0" max="100" value="50">
+
+    <!-- 颜色选择器 -->
+<input type="color" name="favcolor" value="#ff0000">
+<br>
+<!-- 文件上传 -->
+<input type="file" name="avatar" accept="image/*" multiple>
+<br>
+<!-- 隐藏字段 -->
+<input type="hidden" name="user_id" value="123">
+    
+
+<!-- 日期 -->
+<input type="date" name="birthday">
+
+<!-- 时间 -->
+<input type="time" name="meeting_time">
+
+<!-- 日期时间（本地） -->
+<input type="datetime-local" name="event_time">
+
+<!-- 月份 -->
+<input type="month" name="month">
+
+<!-- 周 -->
+<input type="week" name="week">
+    
+<!-- 提交按钮 -->
+<input type="submit" value="提交">
+
+<!-- 重置按钮 -->
+<input type="reset" value="重置">
+
+<!-- 普通按钮 -->
+<input type="button" value="点击我" onclick="alert('Hi!')">
+
+<!-- 图片按钮 -->
+<input type="image" src="submit.png" alt="提交">
+<br>
+<textarea 
+  name="content" 
+  rows="5" 
+  cols="50"
+  placeholder="请输入内容..."
+  maxlength="500"
+>默认内容
+</textarea>
+<br>
+<select name="city" id="city">
+  <option value="" selected>请选择城市</option>
+  <option value="beijing">北京</option>
+  <option value="shanghai" >上海</option>
+  <option value="guangzhou">广州</option>
+</select>
+
+<br>
+<!-- 多选下拉 -->
+<select name="hobbies" multiple size="2">
+  <option value="reading">阅读</option>
+  <option value="music" selected>音乐</option>
+  <option value="sports" selected>运动</option>
+</select>
+
+<br>
+<select name="car">
+  <optgroup label="德国车">
+    <option value="bmw">宝马</option>
+    <option value="benz">奔驰</option>
+  </optgroup>
+  <optgroup label="日本车">
+    <option value="toyota">丰田</option>
+    <option value="honda">本田</option>
+  </optgroup>
+</select>
+
+<label for="browser">选择浏览器：</label>
+<input list="browsers" id="browser" name="browser">
+<br>
+<datalist id="browsers">
+  <option value="Chrome">谷歌浏览器</option>
+  <option value="Firefox">火狐浏览器</option>
+  <option value="Safari">Safari</option>
+  <option value="Edge">Edge</option>
+  <option value="Opera">Opera</option>
+</datalist>
+<br>
+<button type="submit">
+  提交表单
+</button>
+
+
+
+
+
+<button type="button" onClick="printHello()" class="clickButton">这是一个点击事件</button>
+
+<button type="button" id="dom_button" class="clickButton">这是一个点击事件</button>
+
+<script>
+    function printHello(){
+        alert("hello");
+    }
+
+    let elementid=document.getElementById("dom_button");
+    elementid.style.color="blue";
+    elementid.innerHTML="这是由DOM控制的点击事件";
+    elementid.onclick = printHello;
+
+
+    
+</script>
+
+
+</form>
+
+
+</form>
+</body>
+</html>

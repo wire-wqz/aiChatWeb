@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>AI 聊天助手</title>
+
+    <!--全局样式 -->
+    <link rel="stylesheet" href="css/base.css">
+
+    <!--左侧会话列表样式 -->
+    <link rel="stylesheet" href="css/lsidebar.css">
+
+    <!--聊天区总体样式 -->
+    <link rel="stylesheet" href="css/chatarea/chatarea.css">
+    <link rel="stylesheet" href="css/chatarea/topbar.css">
+    <link rel="stylesheet" href="css/chatarea/container.css">
+    <link rel="stylesheet" href="css/chatarea/inputbox.css">
+    <link rel="stylesheet" href="css/chatarea/toolbutton.css">
+    <link rel="stylesheet" href="css/chatarea/recommend.css">
+
+    <!--登录模态框样式 -->
+    <link rel="stylesheet" href="css/login.css">
+
+    <!--充值模态框样式 -->
+    <link rel="stylesheet" href="css/recharge.css">
+
+    <style>
+        /*.tts-btn {
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            background: #28a745;
+            color: white;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .tts-btn:hover {
+            background: #1e7e34;
+        }*/
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <!-- 引入外部库 -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.0/dist/purify.min.js"></script>
+</head>
+<body>
+    
+    <!----------------------------------------------------------------------------------------------->
+    <!-- 侧栏会话列表 -->
+    <div class="session-list">
+        <div class="session-list-header">
+            会话列表
+            <button class="new-chat-btn" id="newChatBtn">＋ 新聊天</button>
+        </div>
+        <ul id="sessionList"></ul>
+        <div class="login-btn" id="user-action-btn">
+            <!-- 登录信息 -->
+            <img src="./images/icon-login.png" alt="登录图标" id="user-icon" />
+            <span id="user-name">未登录</span>
+            <span id="token-balance" class="token-badge hidden">Tokens:0</span>
+            <!-- 弹出菜单 (初始隐藏，由JS控制内容或显示) -->
+            <div class="user-options-popup" id="user-menu">
+                <span class="menu-item" id="btn-recharge">💰 充值中心</span>
+                <span class="menu-item" id="btn-logout" style="color: #ff4d4f;">🚪 退出登录</span>
+            </div>
+        </div>
+    </div>
+
+    <!----------------------------------------------------------------------------------------------->
+    <!-- 聊天区域 -->
+    <div class="chat-section">
+        <!-- 聊天区域顶栏 -->
+        <div class="top-bar">
+            <!--<button class="sync-btn" id="sync-history-btn">同步历史数据</button>*/-->
+            <select id="modelType" title="切换模型回答">
+                <option value="1" selected> Qianwen-plus</option>
+                <option value="2"> Doubao-Seed-2.0-pro</option>
+                <option value="3">Qianwen-max</option>
+                <option value="4">Qianwen-max(Rag:c++知识库)</option>
+            </select>
+        </div>
+        
+        <!-- 聊天双方信息显示框 -->
+        <div class="chat-container" id="chat-container"></div>
+
+        <!-- 推荐输入 -->
+        <div id="recommend-container" class="recommend-wrapper hidden">
+            <div class="recommend-chip" onclick="fillInput('帮我查询长沙未来三天的天气，并制定相应的旅游计划')">🗺️ 长沙旅游规划</div>
+            <div class="recommend-chip" onclick="fillInput('帮我制定一个一周健身计划')">💪 制定健身计划</div>
+            <div class="recommend-chip" onclick="fillInput('写一首关于秋天的七言绝句')">🍂 写首秋天的诗</div>
+        </div>
+
+         <!-- 聊天输入框 -->
+        <form class="input-box" id="chat-form">
+            <textarea id="question" placeholder="请输入你的问题..." required></textarea>
+            <button type="submit">发送</button>
+        </form>
+
+        <!-- 功能开关 -->
+        <div class="tool-actions">
+            <button type="button" class="tool-btn" id="btn-net-search">
+                <span class="icon">🌐</span> 联网搜索
+            </button>
+            <button type="button" class="tool-btn" id="btn-tool-use">
+                <span class="icon">🛠️</span> 工具使用
+            </button>
+        </div>
+        
+        <div class="bottom">内容由AI生成，仅供参考 </div>
+
+    </div>
+
+    <!----------------------------------------------------------------------------------------------->
+    <!-- 登录模态框容器 -->
+    <div id="loginModal" class="modal-overlay">
+        <div class="modal-content">
+            <!-- 关闭按钮 -->
+            <span class="close-btn">&times;</span>
+            
+            <!-- 标题 -->
+            <div class="modal-header">
+                <h2 id="modal-title">欢迎回来</h2>
+                <p id="modal-subtitle">请登录您的账号以继续</p>
+            </div>
+
+            <!-- 表单 -->
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="username">账号</label>
+                    <input type="text" id="username" placeholder="请输入用户账号" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" placeholder="请输入密码" required>
+                </div>
+
+                <div class="input-group" id="confirm-pwd-group" style="display: none;">
+                    <label for="confirm-password">确认密码</label>
+                    <input type="password" id="confirm-password" placeholder="请再次输入密码">
+                 </div>
+
+                <button type="submit" class="submit-btn" id="login-submit-btn">立即登录</button>
+            </form>
+            
+            <!-- 底部链接 (可选) -->
+            <div class="modal-footer">
+                <span id="register-text">还没有账号？</span>
+                <a href="javascript:void(0)" id="register-btn">注册新账号</a>
+            </div>
+        </div>
+    </div>
+
+    <!----------------------------------------------------------------------------------------------->
+    <!-- 充值中心模态框 -->
+    <div id="rechargeModal" class="modal-overlay">
+        <div class="modal-content recharge-content">
+            <span class="close-btn" id="close-recharge">&times;</span>
+            
+            <div class="modal-header">
+                <h2>💰 充值中心</h2>
+                <p>当前余额: <span class="highlight-balance" id="recharge-tokens">40.0k T</span></p>
+            </div>
+
+            <!-- 充值选项网格 -->
+            <div class="recharge-grid">
+                <!-- free档 -->
+                <div class="recharge-card" data-price="0" data-tokens="20000">
+                    <div class="token-amount">20k Tokens</div>
+                    <div class="price-tag">限时免费!!!</div>
+                </div>
+                
+                <!-- 6元档 -->
+                <div class="recharge-card recommended" data-price="6" data-tokens="150000">
+                    <div class="token-amount">150k Tokens</div>
+                    <div class="price-tag">¥ 6</div>
+                </div>
+
+                <!-- 30元档 -->
+                <div class="recharge-card" data-price="30" data-tokens="800000">
+                    <div class="token-amount">800k Tokens</div>
+                    <div class="price-tag">¥ 30</div>
+                </div>
+
+                <!-- 128元档 -->
+                <div class="recharge-card" data-price="128" data-tokens="4000000">
+                    <div class="token-amount">4.0M Tokens</div>
+                    <div class="price-tag">¥ 128</div>
+                </div>
+
+                <!-- 328元档 -->
+                <div class="recharge-card" data-price="328" data-tokens="12000000">
+                    <div class="token-amount">12.0M Tokens</div>
+                    <div class="price-tag">¥ 328</div>
+                </div>
+
+                <!-- 648元档 -->
+                <div class="recharge-card best-value" data-price="648" data-tokens="30000000">
+                    <div class="token-amount">30.0M Tokens</div>
+                    <div class="price-tag">¥ 648</div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <p class="tips">充值即时到账，Token 可用于所有模型对话</p>
+                <button class="submit-btn" id="btn-pay-confirm" disabled>请选择金额</button>
+            </div>
+        </div>
+    </div>
+
+    <!----------------------------------------------------------------------------------------------->
+    <!-- js脚本逻辑 -->
+    <script src="./js/check.js"></script>
+    <script src="./js/send.js"></script>
+    <script src="./js/session.js"></script>
+    <script src="./js/login.js"></script>
+    <script src="./js/tool.js"></script>
+    <script src="./js/recharge.js"></script>
+    <script src="./js/recommend.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello & 肉丸子展示</title>
+    <style>
+        /* 全局样式重置（可选但推荐） */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 页面主体布局：垂直水平居中 */
+        body {
+            font-family: "Arial", sans-serif;
+            background-color: #f0f2f5;
+            min-height: 100vh; /* 占满整个视口高度 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* hello文字样式 */
+        .hello-text {
+            font-size: 3rem;
+            color: #333;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* 图片展示区域 */
+        .show-image-block {
+            width: 1000px;
+            height: 500px; 
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden; 
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background-color: #fff;
+            padding: 10px;
+        }
+
+        /* 展示卡 */
+        .cat-card {
+            display: flex;
+            height: 100%;
+            width:100%;
+            padding: 20px;
+            align-items: center;
+            justify-content: flex-start;
+           
+        }
+
+        /* 图片容器*/
+        .image-container{
+            flex:0 0 50%;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        /* 图片容器的后代img*/
+        .image-container img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 10px 10px 10px rgba(0,0,0,0.1);
+        }
+
+        .image-pair {
+            min-width: 50%; /* 根据你的需求调整 */
+            display: flex;
+        }
+
+        /* 图片的描述（平时被隐藏）*/
+        .image-container .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left:50%;
+            transform: translateX(-50%); /*居中*/
+            color: white;
+            border: solid medium red;
+            padding: 15px 10px 15px 10px;
+            margin: 10px;
+            opacity: 0;
+            transition: transform 0.3s ease;
+            background-color: rgb(100, 89, 89);
+            border-radius:10px;
+        }
+
+        .image-container:hover{
+            width: 110%;
+            height: 110%;
+        }
+
+        .image-container:hover .image-overlay{
+            opacity: 1;
+        }
+
+        /* 左右按钮 */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+        .nav-btn:hover {
+            background: #f0f0f0;
+        }
+        .prev-btn { left: 20px; }
+        .next-btn { right: 20px; }
+
+
+    </style>
+</head>
+<body>
+    <!-- 中间显示的文字 -->
+    <div>
+        <h1 class="hello-text">hello,这是wire的第一个http网页</h1>
+    </div>
+
+    <!-- 下方展示的图片-->
+    <div class="show-image-block">
+        <div class="cat-card">
+            <div class="image-container">
+                <img src="./images/rouwanzi1.jpg" alt="肉丸子1">
+                <div class="image-overlay"> 肉丸子1 </div>
+            </div>
+
+            <div class="image-container">
+                <img src="./images/rouwanzi2.jpg" alt="肉丸子2">
+                <div class="image-overlay"> 肉丸子2 </div>
+            </div>
+        
+            <div class="image-container">
+                <img src="./images/rouwanzi3.jpg" alt="肉丸子3">
+                <div class="image-overlay"> 肉丸子3 </div>
+            </div>
+
+            <div class="image-container">
+                <img src="./images/rouwanzi4.jpg" alt="肉丸子4">
+                <div class="image-overlay"> 肉丸子4 </div>
+            </div>
+
+              <div class="image-container">
+                <img src="./images/rouwanzi5.jpg" alt="肉丸子5">
+                <div class="image-overlay"> 肉丸子5 </div>
+            </div>
+
+              <div class="image-container">
+                <img src="./images/rouwanzi6.jpg" alt="肉丸子6">
+                <div class="image-overlay"> 肉丸子6 </div>
+            </div>
+
+        </div>
+    </div>
+
+    <button class="nav-btn prev-btn" id="prevButton">‹</button>
+    <button class="nav-btn next-btn" id="nextButton">›</button>
+
+    <script>
+        /* 处理图片显示和切换*/
+        let slides = document.getElementsByClassName("image-container");
+        let currentIndex = 0;
+        let maxIndex = Math.floor(slides.length/2);
+        let minIndex = 0;
+        
+        let nextButton = document.getElementById("nextButton");
+        nextButton.addEventListener("click",nextSlides);
+        let prevButton = document.getElementById("prevButton");
+        prevButton.addEventListener("click",prevSlides)
+       
+        imageInit();
+ 
+        /*图片间距处理每组间距100*/
+        function imageInit()
+        {
+            for(let i=0;i<slides.length;i++)
+            {
+                let groupIndex=Math.floor(i/2);
+                let translateXValue = 100*(groupIndex);
+                slides[i].style.transform=`translateX(${translateXValue}%)`; /* 这里是反引号 */
+            }
+        }
+        
+        /*图片切换处理(这里的逻辑应该是在原有的基础上移动，而不是直接改变transform)*/
+        function imageSlide(numSlide)
+        {
+            let translateXValue = -300*numSlide;
+            for(let i=0;i<slides.length;i++)
+            {
+                const transformString = slides[i].style.transform;
+                let match = transformString.match(/translateX\(([^)]+)\)/);
+                let translateXNumber = parseFloat(match[1]);
+                let ftranslateXValue = translateXValue+translateXNumber;
+                slides[i].style.transform=`translateX(${ftranslateXValue}%)`; /* 这里是反引号 */
+            }
+        }
+
+        function nextSlides(){
+            if(currentIndex<maxIndex-1)
+            {
+                currentIndex+=1;
+                imageSlide(1);
+            }
+        }
+
+        function prevSlides(){
+            if(currentIndex>minIndex)
+            {
+                currentIndex-=1;
+                imageSlide(-1);
+            }
+        }
+
+
+
+    </script>
+    
+</body>
+</html>

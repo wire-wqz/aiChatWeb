@@ -1,0 +1,17 @@
+{
+  "tools": [
+    {
+      "name": "get_weather",
+      "params": {
+        "city": "城市名称，可以是任意城市，如：北京、上海、广州、纽约、伦敦等，符合https://wttr.in/的规范",
+        "forecastMode": "模式选择（boolean）：flase代表仅查询当前实时天气；true代表查询未来、最近天气预报、特定日期或详细天气信息等"
+      },
+      "desc": "获取天气"
+    },
+    {
+      "name": "get_time",
+      "params": {},
+      "desc": "获取当前时间"
+    }
+  ]
+}
