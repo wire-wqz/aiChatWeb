@@ -1,5 +1,5 @@
 # aiChatWeb
-基于muduo网络库构造的AiChat-HTTP服务框架，支持千问豆包对话，集成cmake、ssl、mysql、rabbitmq、MCP工具调用、RAG知识库、支付宝支付等
+基于muduo网络库构造AiChat-HTTP框架，支持千问豆包，集成cmake、ssl、mysql、rabbitmq、MCP工具调用、RAG知识库、支付宝支付等
 
 # 项目依赖
 
